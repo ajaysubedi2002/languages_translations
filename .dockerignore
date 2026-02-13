@@ -1,0 +1,43 @@
+# Python virtual environments
+myenv/
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Git
+.git/
+.gitignore
+.github/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+README.md
+
+# Docker (exclude from build context)
+docker-compose.yml
+.dockerignore
+
+# Logs
+*.log
+*.bak

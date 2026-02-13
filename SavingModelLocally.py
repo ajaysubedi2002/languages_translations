@@ -1,38 +1,28 @@
-# from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-# model_name = "facebook/nllb-200-distilled-600M"
+model_name = "facebook/nllb-200-distilled-600M"
 
-# tokenizer = AutoTokenizer.from_pretrained(model_name)
-# model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
-# save_path = "D:/machine_translations/nllb_model"
-# tokenizer.save_pretrained(save_path)
-# model.save_pretrained(save_path)
+save_path = "models/nllb_model"
+tokenizer.save_pretrained(save_path)
+model.save_pretrained(save_path)
 
-# print("Loaded from local folder successfully!: ", model_name)
-
-
-# from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-
-# model_name = "google/madlad400-3b-mt"
-
-# tokenizer = AutoTokenizer.from_pretrained(model_name)
-# model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
-# save_path = "D:/models/google_madlad400-3b-mt"
-# tokenizer.save_pretrained(save_path)
-# model.save_pretrained(save_path)
-
-# print("Loaded from local folder successfully!: ", model_name)
+print("Loaded from local folder successfully!: ", model_name)
 
 
+from transformers import MBartForConditionalGeneration, MBart50TokenizerFast
 
-# from transformers import MBartForConditionalGeneration, MBart50TokenizerFast
+
+model = MBartForConditionalGeneration.from_pretrained("facebook/mbart-large-50-many-to-many-mmt")
+tokenizer = MBart50TokenizerFast.from_pretrained("facebook/mbart-large-50-many-to-many-mmt")
+
+save_path = "models/facebook_mbart_large_50_many_to_many_mmt"
+tokenizer.save_pretrained(save_path)
+model.save_pretrained(save_path)
+print("Loaded from local folder successfully!: ", "facebook/mbart-large-50-many-to-many-mmt")
 
 
-# model = MBartForConditionalGeneration.from_pretrained("facebook/mbart-large-50-many-to-many-mmt")
-# tokenizer = MBart50TokenizerFast.from_pretrained("facebook/mbart-large-50-many-to-many-mmt")
 
-# save_path = "models/facebook_mbart_large_50_many_to_many_mmt"
-# tokenizer.save_pretrained(save_path)
-# model.save_pretrained(save_path)
-# print("Loaded from local folder successfully!: ", "facebook/mbart-large-50-many-to-many-mmt")
+

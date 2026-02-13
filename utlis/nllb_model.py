@@ -1,6 +1,7 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 # from transformers import NllbTokenizer, M2M100ForConditionalGeneration
-model_path = "models/nllb_model"
+from config import settings
+model_path = settings.model_path_nllb
 class NLLBTranslator:
     def __init__(self, model_path):
         self.tokenizer = AutoTokenizer.from_pretrained(model_path)
