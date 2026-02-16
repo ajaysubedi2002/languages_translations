@@ -1,0 +1,35 @@
+{
+  "duration": "Weather forecast for the next seven days",
+  "week_dates": "2082/10/14 - 2082/10/20",
+  "weather_table": {
+    "region": "Lumbini Province",
+    "rainfall": "No significant chance of rain or snowfall",
+    "max_temp": "Slight increase",
+    "min_temp": "Slight increase",
+    "cloud_condition": "Clear to partly cloudy",
+    "significant_weather": "No significant weather systems expected",
+    "remarks": ""
+  },
+  "weather_summary": {
+    "weather_forecast": [
+      {
+        "point": "In the mountainous region, the weather is expected to be mainly clear to partly cloudy throughout the week. Maximum and minimum temperatures may increase slightly. No significant chance of rain or snowfall.",
+        "sub_points": null
+      },
+      {
+        "point": "In the hilly region, the weather is expected to be mainly clear to partly cloudy throughout the week. There is a possibility of slight increases in both maximum and minimum temperatures.",
+        "sub_points": null
+      },
+      {
+        "point": "In the Terai region, the weather is expected to be mostly clear. Fog or mist may occur in the morning but is likely to gradually improve by midday. Maximum and minimum temperatures may increase slightly.",
+        "sub_points": null
+      }
+    ],
+    "season": {
+      "title": "Summary of the upcoming week’s weather",
+      "highlight": true,
+      "summary": "There are no significant weather systems expected throughout the week. High hilly and mountainous areas: There is a possibility of light snowfall or rain in some locations in Koshi, Bagmati, and Gandaki provinces during the middle and end of the week.",
+      "media": []
+    }
+  }
+}

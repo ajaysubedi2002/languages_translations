@@ -1,6 +1,6 @@
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter
-from schema.model import TranslationRequest
+from schema.model import JSONTranslationRequest, TranslationRequest
 from utlis.nllb_model import translator  
 from utlis.large_50_mmt import translation_model
 from utlis.translate_gemma import translate_gemma
@@ -8,6 +8,9 @@ from fastapi import UploadFile, File
 import requests
 from utlis.encode_image import encode_image_to_base64
 from config import settings
+from utlis.translate_json import translate_json
+from fastapi import UploadFile, File
+import json
 
 app = APIRouter()
 
@@ -114,4 +117,27 @@ async def translate_image(
     data = response.json()
 
     return {"translation": data.get("response", "")}
+   
 
+
+
+@app.post("/translate-json-file")
+async def translate_json_file(
+    source_lang: str = "Nepali",
+    source_code: str = "ne",
+    target_lang: str = "English",
+    target_code: str = "en",
+    file: UploadFile = File(...)
+):
+    raw_json = json.loads(await file.read())
+
+    req = JSONTranslationRequest(
+        source_lang=source_lang,
+        source_code=source_code,
+        target_lang=target_lang,
+        target_code=target_code,
+        data=raw_json
+    )
+
+    translated_data = translate_json(raw_json, req)
+    return {"translated_data": translated_data}

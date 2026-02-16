@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
+from typing import Any
+
 class TranslationRequest(BaseModel):
     source_lang: str = "English"
     source_code: str = "en"
@@ -12,4 +14,9 @@ class TranslationRequest_facebook(BaseModel):
     src_lang: str
     tgt_lang: str
     
-    
+class JSONTranslationRequest(BaseModel):
+    source_lang: str = "English"
+    source_code: str = "en"
+    target_lang: str = "Nepali"
+    target_code: str = "ne"
+    data: Any 
