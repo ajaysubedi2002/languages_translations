@@ -1,10 +1,6 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
 from langchain_ollama import ChatOllama
-from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage
 from schema.model import TranslationRequest
-from utlis import get_llm
 from config import settings
 
 def translate_gemma(request: TranslationRequest):

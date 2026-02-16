@@ -1,9 +1,13 @@
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter
-from schema.model import TranslationRequest, TranslationRequest_facebook
+from schema.model import TranslationRequest
 from utlis.nllb_model import translator  
 from utlis.large_50_mmt import translation_model
 from utlis.translate_gemma import translate_gemma
+from fastapi import UploadFile, File
+import requests
+from utlis.encode_image import encode_image_to_base64
+from config import settings
 
 app = APIRouter()
 
@@ -11,77 +15,32 @@ app = APIRouter()
 def read_root():    
     return {"message": "Welcome to the Language Translation API!"}
 
-# @app.post("/translate_50_mmt")
-# def translate_text_50_mmt(text: str, src_lang: str, tgt_lang: str):
-#     """ Args:
-#     text (str): "enter the text you want to translate"        
-#     src_lang="en_XX",
-    
-#     tgt_lang="ne_NP"
-    
-#     """
-#     try:
-#         translation = translation_model.translate(
-#             text=text,
-#             src_lang=src_lang,
-#             tgt_lang=tgt_lang
-#         )
-
-#         return JSONResponse(
-#             status_code=200,
-#             content={
-#                 "source_text": text,
-#                 "source_language": src_lang,
-#                 "target_language": tgt_lang,
-#                 "translation": translation[0]
-#             }
-#         )
-
-#     except Exception as e:
-#         return JSONResponse(
-#             status_code=500,
-#             content={"error": str(e)}
-#         )
-
-
-# article_hi = "my name is ajay"
-
-# response = translation_model.translate(
-#     text=article_hi,    
-#     src_lang="en_XX",   
-#     tgt_lang="ne_NP"
-# )
- 
-# print("English -> Nepali:", response[0])
-
-
 @app.post("/translate_50_mmt")
-def translate_text_50_mmt(request: TranslationRequest_facebook):
+def translate_text_50_mmt(text:str, src_lang:str="en_XX", tgt_lang:str="ne_NP"):
     """ Args:
-text (str): "enter the text you want to translate"        
-src_lang="en_XX",
-    
+text (str): "enter the text you want to translate",       
+src_lang="en_XX",    
 tgt_lang="ne_NP"
-"""
+    """
     try:
         translation = translation_model.translate(
-            text=request.text,
-            src_lang="en_XX",
-            tgt_lang="ne_NP"
-            # src_lang=request.src_lang,
-            # tgt_lang=request.tgt_lang
+            text = text,
+            src_lang = src_lang,
+            tgt_lang = tgt_lang,
+        
         )
         return {
-            "source_text": request.text,
-            "source_language": "en_XX",
-            "target_language": "ne_NP",
+            "source_text": text,
+            "source_language": src_lang,
+            "target_language": tgt_lang,
             "translation": translation[0]
         }
     except Exception as e:
         return {"error": str(e)}
-    
+   
+     
 @app.post("/translate_nllb_model")
-def translate_text_nllb_model(text: str, src_lang: str, tgt_lang: str) -> str:
+def translate_text_nllb_model(text: str, src_lang: str = "eng_Latn", tgt_lang: str = "npi_Deva") -> str:
     """ Args:
     text (str): "enter the text you want to translate"        
     src_lang="eng_Latn",
@@ -125,3 +84,34 @@ def translate_text_gemma(request: TranslationRequest):
             status_code=500,
             content={"error": str(e)}
         )
+
+@app.post("/translate-image/")
+async def translate_image(
+    source_lang: str = "English",
+    target_lang: str = "Nepali",
+    source_code: str = "en",
+    target_code: str = "ne",    
+    file: UploadFile = File(...)
+):
+    OLLAMA_GENERATE_URL = f"{settings.OLLAMA_API_URL}/api/generate"
+    img_bytes = await file.read()
+    img_b64 = encode_image_to_base64(img_bytes)
+
+    prompt = (
+        f"You are a professional {source_lang} ({source_code}) to {target_lang} ({target_code}) translator. "
+        f"Translate the text in the uploaded image into {target_lang}. "
+        f"Produce only the {target_lang} translation, without extra explanations."
+    )
+
+    payload = {
+        "model": settings.Translate_model,
+        "prompt": prompt,
+        "images": [img_b64],
+        "stream": False
+    }
+    # Call Ollama API
+    response = requests.post(OLLAMA_GENERATE_URL, json=payload)
+    data = response.json()
+
+    return {"translation": data.get("response", "")}
+

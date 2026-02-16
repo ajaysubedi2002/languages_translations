@@ -248,14 +248,3 @@ Main dependencies include:
 
 See [requirements.txt](requirements.txt) for the complete list.
 
-## License
-
-[Add your license here]
-
-## Contributing
-
-[Add contribution guidelines here]
-
-## Support
-
-For issues and questions, please [open an issue](your-repo-issues-url) on GitHub.

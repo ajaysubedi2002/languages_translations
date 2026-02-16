@@ -1,9 +1,11 @@
 fastapi
-uvicorn
-pydantic-settings
-transformers
+langchain_core
+langchain_ollama
+pydantic
+pydantic_settings
 torch
+uvicorn
+transformers
 sentencepiece
-langchain-ollama
-langchain-core
-langchain-community
+python-multipart
+Requests

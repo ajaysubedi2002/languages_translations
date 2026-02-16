@@ -1,12 +1,7 @@
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent))
 from transformers import MBartForConditionalGeneration, MBart50TokenizerFast
 from config import settings
 model_path = settings.model_path_facebook
 import torch
-from fastapi import FastAPI
-from pydantic import BaseModel
 from transformers import MBartForConditionalGeneration, MBart50TokenizerFast
 from config import settings
 
@@ -32,19 +27,14 @@ class FacebookMBart:
 
 translation_model = FacebookMBart(model_path)
 
+# translation = translation_model.translate(
+#             text = "my name is ajay how are you doing today",
+#             src_lang="en_XX",
+#             tgt_lang="ne_NP"
+#             # src_lang=request.src_lang,
+#             # tgt_lang=request.tgt_lang
+#         )
+
+# print("English -> Nepali:", translation[0])
 
 
-
-
-# model = MBartForConditionalGeneration.from_pretrained(model_path)
-# tokenizer = MBart50TokenizerFast.from_pretrained(model_path)
-
-# # translate English to Nepali
-# tokenizer.src_lang = "en_XX"    
-# encoded_hi = tokenizer(article_hi, return_tensors="pt")
-# generated_tokens = model.generate(
-#     **encoded_hi,
-#     forced_bos_token_id=tokenizer.lang_code_to_id["ne_NP"]
-# )
-# ENG_to_NEPALI = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
-# print("English -> Nepali:", ENG_to_NEPALI[0])
